@@ -2,6 +2,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
 # Compiled class file
+target/**
+*.jar
+*.war
+*.ear
 *.class
 
 .classpath
@@ -9,15 +13,33 @@
 .settings
 .settings/
 
+# eclipse specific
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+*.launch
+
+# Directories #
+/build/
+/bin/
+target/
+
 # Log file
 *.log
 
 # Bin file
 *.bin
-
-=======
-# Compiled class file
-*.class
 
 # Log file
 *.log
@@ -59,3 +81,9 @@ buildNumber.properties
 .idea/misc.xml
 .idea/vcs.xml
 .idea/
+
+# CDT-specific
+.cproject
+ 
+# PDT-specific
+.buildpath
