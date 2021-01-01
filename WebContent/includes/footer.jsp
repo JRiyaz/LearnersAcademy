@@ -33,14 +33,22 @@ pageEncoding="ISO-8859-1"%>
 
 <script>
   $(document).ready(function () {
-    const alert = $("#toast-alert");
-    const body = $("#toast-body");
+    const url = window.location.href;
 
-    body.addClass("text-success");
-    body.text("Hello world");
+    if (url.includes("?login-successful")) toast("Login Successful");
+    else if (url.includes("?logout-successful")) toast("Logout Successful");
+    else if (url.includes("?user-exists")) toast("You should LogOut first to LogIn again.");
+    
+    function toast(message) {
+      const alert = $("#toast-alert");
+      const body = $("#toast-body");
 
-    alert.addClass("border-success");
-    alert.toast({ delay: 5000 });
-    alert.toast("show");
+      body.addClass("text-success");
+      body.text(message);
+
+      alert.addClass("border-success");
+      alert.toast({ delay: 5000 });
+      alert.toast("show");
+    }
   });
 </script>

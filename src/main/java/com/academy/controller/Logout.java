@@ -1,24 +1,24 @@
 package main.java.com.academy.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class Logout
  */
-@WebServlet(name = "home", urlPatterns = { "/home" })
-public class Home extends HttpServlet {
+@WebServlet(name = "logout", urlPatterns = { "/logout" })
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Home() {
+	public Logout() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -31,7 +31,12 @@ public class Home extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		request.getRequestDispatcher("index.jsp").include(request, response);
+		HttpSession session = request.getSession(false);
+		session.setAttribute("user", "");
+		session.removeAttribute("user");
+		session.invalidate();
+
+		response.sendRedirect("home?logout-successful");
 	}
 
 }
