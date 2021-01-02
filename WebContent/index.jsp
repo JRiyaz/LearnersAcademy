@@ -127,7 +127,7 @@ pageEncoding="ISO-8859-1"%>
                         <div class="d-block text-muted">
                           <a
                             href="classes"
-                            class="btn btn-outline-success stretched-link"
+                            class="btn btn-outline-success"
                             >View Classes</a
                           >
                         </div>
@@ -150,7 +150,7 @@ pageEncoding="ISO-8859-1"%>
                         <div class="d-block text-muted">
                           <a
                             href="subjects"
-                            class="btn btn-outline-success stretched-link"
+                            class="btn btn-outline-success"
                             >View Subjects</a
                           >
                         </div>
@@ -173,7 +173,7 @@ pageEncoding="ISO-8859-1"%>
                         <div class="d-block text-muted">
                           <a
                             href="class-subjects"
-                            class="btn btn-outline-success stretched-link"
+                            class="btn btn-outline-success"
                             >View Classes & Subjects</a
                           >
                         </div>
@@ -196,7 +196,7 @@ pageEncoding="ISO-8859-1"%>
                         <div class="d-block text-muted">
                           <a
                             href="teachers"
-                            class="btn btn-outline-success stretched-link"
+                            class="btn btn-outline-success"
                             >View Teachers</a
                           >
                         </div>
@@ -219,8 +219,8 @@ pageEncoding="ISO-8859-1"%>
                         >
                         <div class="d-block text-muted">
                           <a
-                            href="class-report"
-                            class="btn btn-outline-success stretched-link"
+                            href="classes"
+                            class="btn btn-outline-success"
                             >View Class Report</a
                           >
                         </div>

@@ -3,7 +3,6 @@ package main.java.com.academy.dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class Database implements AutoCloseable {
@@ -11,8 +10,6 @@ public class Database implements AutoCloseable {
 	private static Connection connection = null;
 
 	public static Connection getConnection() {
-
-//		File file = new File("D:\\Programs\\Eclipse Work\\JEEPractice\\config.properties");
 
 		try {
 
@@ -30,7 +27,7 @@ public class Database implements AutoCloseable {
 
 			connection = DriverManager.getConnection(url, username, pass);
 
-		} catch (SQLException | ClassNotFoundException | IOException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 		}

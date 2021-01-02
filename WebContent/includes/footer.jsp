@@ -35,18 +35,18 @@ pageEncoding="ISO-8859-1"%>
   $(document).ready(function () {
     const url = window.location.href;
 
-    if (url.includes("?login-successful")) toast("Login Successful");
-    else if (url.includes("?logout-successful")) toast("Logout Successful");
-    else if (url.includes("?user-exists")) toast("You should LogOut first to LogIn again.");
+    if (url.includes("?login-successful")) toast("Login Successful", "text-success", "border-success");
+    else if (url.includes("?logout-successful")) toast("Logout Successful", "text-success", "border-success");
+    else if (url.includes("?user-exists")) toast("You should Logout first to Login again.", "text-danger", "border-danger");
     
-    function toast(message) {
+    function toast(message, textColor, borderColor) {
       const alert = $("#toast-alert");
       const body = $("#toast-body");
 
-      body.addClass("text-success");
+      body.addClass(textColor);
       body.text(message);
 
-      alert.addClass("border-success");
+      alert.addClass(borderColor);
       alert.toast({ delay: 5000 });
       alert.toast("show");
     }
