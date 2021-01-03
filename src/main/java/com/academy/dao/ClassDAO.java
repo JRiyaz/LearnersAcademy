@@ -70,4 +70,32 @@ public class ClassDAO {
 		return strength;
 	}
 
+	protected static Classes getClass(Connection connection, int id) {
+
+		Classes classes = null;
+
+		try {
+
+			String sql = "SELECT * FROM classes WHERE class_id = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setInt(1, id);
+
+			ResultSet set = statement.executeQuery();
+
+			if (set.next())
+				classes = new Classes(set.getInt("class_id"), set.getString("class_name"), set.getInt("seats"));
+
+			statement.close();
+			set.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return classes;
+	}
+
 }

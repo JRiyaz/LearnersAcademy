@@ -17,12 +17,12 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class Authentication
  */
 @WebFilter(filterName = "authentication", urlPatterns = { "/*" })
-public class Authentication implements Filter {
+public class AuthenticationFilter implements Filter {
 
 	/**
 	 * Default constructor.
 	 */
-	public Authentication() {
+	public AuthenticationFilter() {
 		// TODO Auto-generated constructor stub
 	}
 

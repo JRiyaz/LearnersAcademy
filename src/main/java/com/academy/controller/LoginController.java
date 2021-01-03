@@ -1,6 +1,7 @@
 package main.java.com.academy.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +16,13 @@ import main.java.com.academy.entity.Users;
  * Servlet implementation class Login
  */
 @WebServlet(name = "login", urlPatterns = { "/login" })
-public class Login extends HttpServlet {
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Login() {
+	public LoginController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -43,6 +44,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		String user_name = request.getParameter("username");
 		String password = request.getParameter("password");
 
@@ -54,7 +56,7 @@ public class Login extends HttpServlet {
 			user = Authenticate.getUser(user_name, password);
 
 		if (user != null) {
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession();
 			session.setAttribute("user", user.getEmail());
 
 			response.sendRedirect("home?login-successful");
