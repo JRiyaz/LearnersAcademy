@@ -58,7 +58,10 @@ pageEncoding="ISO-8859-1"%>
                   </button>
                 </div>
               </h6>
+              
+              <!-- Row Begin -->
               <div class="row">
+              <!-- Tabs Headers Begin -->
                 <div class="col-4">
                   <div class="list-group" id="list-tab" role="tablist">
                     <a
@@ -81,21 +84,22 @@ pageEncoding="ISO-8859-1"%>
                     >
                     <a
                       class="list-group-item list-group-item-action"
-                      id="list-classes-subjects-list"
-                      data-toggle="list"
-                      href="#list-classes-subjects"
-                      role="tab"
-                      aria-controls="classes-subjects"
-                      >Classes & Subjects</a
-                    >
-                    <a
-                      class="list-group-item list-group-item-action"
                       id="list-teachers-list"
                       data-toggle="list"
                       href="#list-teachers"
                       role="tab"
                       aria-controls="teachers"
                       >Teachers</a
+                    >
+                    
+                    <a
+                      class="list-group-item list-group-item-action"
+                      id="list-students-list"
+                      data-toggle="list"
+                      href="#list-students"
+                      role="tab"
+                      aria-controls="students"
+                      >Students</a
                     >
                     <a
                       class="list-group-item list-group-item-action"
@@ -108,8 +112,13 @@ pageEncoding="ISO-8859-1"%>
                     >
                   </div>
                 </div>
+                <!-- Tabs Headers End -->
+                
+                <!-- Tabs Content Begin -->
                 <div class="col-8">
                   <div class="tab-content my-3" id="nav-tabContent">
+                  
+                  <!-- Class Tab Begin -->
                     <div
                       class="tab-pane fade show active"
                       id="list-classes"
@@ -133,6 +142,9 @@ pageEncoding="ISO-8859-1"%>
                         </div>
                       </div>
                     </div>
+                    <!-- Class Tab End -->
+                    
+                    <!-- Subjects Tab Begin -->
                     <div
                       class="tab-pane fade"
                       id="list-subjects"
@@ -156,29 +168,9 @@ pageEncoding="ISO-8859-1"%>
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="tab-pane fade"
-                      id="list-classes-subjects"
-                      role="tabpanel"
-                      aria-labelledby="list-classes-subjects-list"
-                    >
-                      <div class="container">
-                        <h3 class="card-title pricing-card-title">
-                          Master List of Classes & Subjects
-                        </h3>
-                        <strong class="text-muted my-4 d-block"
-                          >Here you can view the master list of all the Classes
-                          & Subjects.</strong
-                        >
-                        <div class="d-block text-muted">
-                          <a
-                            href="class-subjects"
-                            class="btn btn-outline-success"
-                            >View Classes & Subjects</a
-                          >
-                        </div>
-                      </div>
-                    </div>
+                    <!-- Subjects Tab Ends -->
+                    
+                    <!-- Teachers Tab Begin -->
                     <div
                       class="tab-pane fade"
                       id="list-teachers"
@@ -202,6 +194,34 @@ pageEncoding="ISO-8859-1"%>
                         </div>
                       </div>
                     </div>
+                    <!-- Teachers Tab End -->
+                    
+                    <!-- Subjects Tab Begin -->
+                    <div
+                      class="tab-pane fade"
+                      id="list-students"
+                      role="tabpanel"
+                      aria-labelledby="list-students-list"
+                    >
+                      <div class="container">
+                        <h3 class="card-title pricing-card-title">
+                          Master List of Subjects
+                        </h3>
+                        <strong class="text-muted my-4 d-block"
+                          >Here you can view the master list of all Subjects.</strong
+                        >
+                        <div class="d-block text-muted">
+                          <a
+                            href="class-subjects"
+                            class="btn btn-outline-success"
+                            >View Subjects</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Subjects Tab End -->
+                    
+                    <!-- Class Report Tab Begin -->
                     <div
                       class="tab-pane fade"
                       id="list-report"
@@ -226,9 +246,12 @@ pageEncoding="ISO-8859-1"%>
                         </div>
                       </div>
                     </div>
+                    <!-- Class Report Tab End -->
                   </div>
                 </div>
+                <!-- Tabs Content End -->
               </div>
+              <!-- Row End -->
             </div>
           </div>
         </div>

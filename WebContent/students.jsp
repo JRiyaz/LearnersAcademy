@@ -5,7 +5,7 @@ prefix="c"%>
 <html>
   <head>
     <meta charset="ISO-8859-1" />
-    <title>Teachers | Learners's Academy</title>
+    <title>Students | Learners's Academy</title>
 
     <!--  Bootstrap CSS-->
     <link
@@ -33,10 +33,10 @@ prefix="c"%>
       <!-- Fluid-Container Begins -->
       <div class="fluid-container">
         <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-          <h3 class="display-5">Master List Of Teachers</h3>
+          <h3 class="display-5">Master List Of Students</h3>
           <p class="lead mt-3">
-            Here you have the master list of all the Teachers with respective
-            Subjects with pagination support.
+            Here you have the master list of all the Students with respective
+            Class with pagination support.
           </p>
         </div>
 
@@ -45,42 +45,28 @@ prefix="c"%>
           <thead>
             <tr>
               <th scope="col">S.No</th>
-              <th scope="col">Teacher Name</th>
+              <th scope="col">Students Name</th>
               <th scope="col">Age</th>
               <th scope="col">Gender</th>
               <th scope="col">Email ID</th>
-              <c:if test="${subjects }">
-                <th scope="col">Subjects</th>
-              </c:if>
-              <c:if test="${classes }">
-                <th scope="col">Classes</th>
+              <c:if test="${showClass }">
+                <th scope="col">Class</th>
               </c:if>
             </tr>
           </thead>
           <tbody>
-            <c:forEach items="${teachers}" var="teacher">
+            <c:forEach items="${students}" var="student">
               <tr>
-                <th scope="row">${teacher.teacherId }</th>
-                <td>${teacher.name }</td>
-                <td>${teacher.age }</td>
-                <td>${teacher.gender }</td>
-                <td>${teacher.emailId }</td>
-                <c:if test="${subjects }">
+                <th scope="row">${student.studentId }</th>
+                <td>${student.name }</td>
+                <td>${student.age }</td>
+                <td>${student.gender }</td>
+                <td>${student.emailId }</td>
+                <c:if test="${showClass }">
                   <td class="d-flex px-0">
-                    <c:forEach var="subject" items="${teacher.subjects}">
-                      <span class="mx-1 badge badge-pill badge-primary p-2"
-                        >${subject.name }</span
-                      >
-                    </c:forEach>
-                  </td>
-                </c:if>
-                <c:if test="${classes }">
-                  <td class="d-flex px-0">
-                    <c:forEach var="classes" items="${teacher.classes}">
                       <span class="mx-1 badge badge-pill badge-success p-2"
-                        >${classes.name }</span
+                        >${student.cls.name }</span
                       >
-                    </c:forEach>
                   </td>
                 </c:if>
               </tr>
@@ -96,7 +82,7 @@ prefix="c"%>
               <li class="page-item ${1 == currentPage ? 'disabled' : ''}">
                 <a
                   class="page-link"
-                  href="teachers?page=${currentPage - 1}"
+                  href="students?page=${currentPage - 1}"
                   tabindex="-1"
                   aria-disabled="true"
                   >Previous</a
@@ -107,14 +93,14 @@ prefix="c"%>
                 <li
                   class="page-item ${loop.index == currentPage ? 'disabled' : ''}"
                 >
-                  <a class="page-link" href="teachers?page=${loop.index}"
+                  <a class="page-link" href="students?page=${loop.index}"
                     >${loop.index}</a
                   >
                 </li>
               </c:forEach>
 
               <li class="page-item ${pages == currentPage ? 'disabled' : ''}">
-                <a class="page-link" href="teachers?page=${currentPage + 1}"
+                <a class="page-link" href="students?page=${currentPage + 1}"
                   >Next</a
                 >
               </li>

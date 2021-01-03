@@ -38,8 +38,9 @@ pageEncoding="ISO-8859-1"%>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="classes">Classes</a>
     <a class="p-2 text-dark" href="subjects">Subjects</a>
-    <a class="p-2 text-dark" href="teachers">Teachers</a>
-    <!--<a class="p-2 text-dark" href="#">Class Report</a>-->
+    <a class="p-2 text-dark" href="teachers">Teachers</a>    
+    <a class="p-2 text-dark" href="students">Students</a>
+    <a class="p-2 text-dark" href="report">Class Report</a>
   </nav>
 
   <% if(user == null || user.equals("")) {%>

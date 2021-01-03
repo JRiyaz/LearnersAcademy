@@ -20,7 +20,7 @@ public class Students implements Serializable {
 	private int age;
 	private String gender;
 	private String emailId;
-	private int classId;
+	private Classes cls;
 
 	public Students(int studentId, String name, int age, String gender, String emailId) {
 		super();
