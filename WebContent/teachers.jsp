@@ -49,10 +49,10 @@ prefix="c"%>
               <th scope="col">Age</th>
               <th scope="col">Gender</th>
               <th scope="col">Email ID</th>
-              <c:if test="${subjects }">
+              <c:if test="${showSubjects }">
                 <th scope="col">Subjects</th>
               </c:if>
-              <c:if test="${classes }">
+              <c:if test="${showClass }">
                 <th scope="col">Classes</th>
               </c:if>
             </tr>
@@ -65,7 +65,7 @@ prefix="c"%>
                 <td>${teacher.age }</td>
                 <td>${teacher.gender }</td>
                 <td>${teacher.emailId }</td>
-                <c:if test="${subjects }">
+                <c:if test="${showSubjects }">
                   <td class="d-flex px-0">
                     <c:forEach var="subject" items="${teacher.subjects}">
                       <span class="mx-1 badge badge-pill badge-primary p-2"
@@ -74,7 +74,7 @@ prefix="c"%>
                     </c:forEach>
                   </td>
                 </c:if>
-                <c:if test="${classes }">
+                <c:if test="${showClass }">
                   <td class="d-flex px-0">
                     <c:forEach var="classes" items="${teacher.classes}">
                       <span class="mx-1 badge badge-pill badge-success p-2"

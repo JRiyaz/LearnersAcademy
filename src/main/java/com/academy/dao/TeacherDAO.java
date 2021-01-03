@@ -81,7 +81,7 @@ public class TeacherDAO {
 				sql = "SELECT * FROM teachers LIMIT " + limit;
 
 			if (limit > 0 && offset > 0)
-				sql = "SELECT * FROM teachers LIMIT " + limit + " OFFSET " + (offset - 1);
+				sql = "SELECT * FROM teachers LIMIT " + limit + " OFFSET " + offset;
 
 			Statement statement = connection.createStatement();
 

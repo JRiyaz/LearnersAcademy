@@ -39,7 +39,7 @@ public class TeacherController extends HttpServlet {
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0);
 
-		int from = 1;
+		int from = 0;
 		int to = 10;
 
 		int currentPage = 1;
@@ -53,17 +53,20 @@ public class TeacherController extends HttpServlet {
 			from = to - 10;
 		}
 
-		List<Teachers> teachers = TeacherDAO.getFewTeachersWithOffset(11, from, false, true);
+		boolean showClass = false;
+		boolean showSubjects = true;
+
+		List<Teachers> teachers = TeacherDAO.getFewTeachersWithOffset(10, from, showClass, showSubjects);
 
 		int count = TeacherDAO.countOfTeachers();
 
-		int pages = count / 10;
+		int pages = (int) Math.round(((double) count) / 10);
 
 		request.setAttribute("teachers", teachers);
 
-		request.setAttribute("classes", false);
+		request.setAttribute("showClass", showClass);
 
-		request.setAttribute("subjects", true);
+		request.setAttribute("showSubjects", showSubjects);
 
 		request.setAttribute("pages", pages);
 
