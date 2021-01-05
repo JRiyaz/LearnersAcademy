@@ -55,11 +55,11 @@ public class StudentController extends HttpServlet {
 		
 		boolean showClass = true;
 
-		List<Students> students = StudentDAO.getFewStudentsWithOffset(10, from, showClass);
+		List<Students> students = StudentDAO.getFewStudentsWithOffset(30, from, showClass);
 
 		int count = StudentDAO.countOfStudents();
 
-		int pages = (int) Math.round(((double) count) / 10);
+		int pages = (int) Math.round(((double) count) / 30);
 
 		request.setAttribute("students", students);
 

@@ -47,6 +47,5 @@ public class Database implements AutoCloseable {
 
 		if (connection != null)
 			connection.close();
-		System.out.println("Connection is closed");
 	}
 }

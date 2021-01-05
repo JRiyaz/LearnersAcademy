@@ -15,7 +15,7 @@ import main.java.com.academy.entity.Teachers;
 /**
  * Servlet implementation class TeacherController
  */
-@WebServlet(name = "teachers", urlPatterns = { "/teachers" })
+@WebServlet(name = "teachers", urlPatterns = { "/teachers", "/teacher" })
 public class TeacherController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class TeacherController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0);
-
+		
 		int from = 0;
 		int to = 10;
 
@@ -56,7 +56,7 @@ public class TeacherController extends HttpServlet {
 		boolean showClass = false;
 		boolean showSubjects = true;
 
-		List<Teachers> teachers = TeacherDAO.getFewTeachersWithOffset(10, from, showClass, showSubjects);
+		List<Teachers> teachers = TeacherDAO.getFewTeachersWithLimitAndOffset(10, from, showClass, showSubjects);
 
 		int count = TeacherDAO.countOfTeachers();
 

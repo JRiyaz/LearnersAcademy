@@ -20,9 +20,9 @@ public class Classes implements Serializable {
 	private String name;
 	private int seats;
 	private int strength;
-	private List<Subjects> Subjects;
-	private List<Students> Students;
-	private List<Teachers> Teachers;
+	private List<Subjects> subjects;
+	private List<Students> students;
+	private List<Teachers> teachers;
 
 	public Classes(int classId, String name, int seats) {
 		super();

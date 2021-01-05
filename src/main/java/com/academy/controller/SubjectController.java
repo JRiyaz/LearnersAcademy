@@ -39,7 +39,7 @@ public class SubjectController extends HttpServlet {
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0);
 
-		List<Subjects> subjects = SubjectDAO.getSubjects();
+		List<Subjects> subjects = SubjectDAO.getAllSubjects();
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher("subjects.jsp").forward(request, response);
 	}

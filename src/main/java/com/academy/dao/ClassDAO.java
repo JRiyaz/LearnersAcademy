@@ -9,31 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.com.academy.entity.Classes;
+import main.java.com.academy.entity.Students;
+import main.java.com.academy.entity.Subjects;
+import main.java.com.academy.entity.Teachers;
 
 public class ClassDAO {
 
-	public static List<Classes> getClasses() {
+	public static List<Classes> getAllClassesWithStrength() {
 
 		List<Classes> classes = new ArrayList<>();
 
-		try (Connection connection = Database.getConnection()) {
+		String sql = "SELECT * FROM classes";
 
-			String sql = "SELECT * FROM classes";
-
-			Statement statement = connection.createStatement();
-
-			ResultSet set = statement.executeQuery(sql);
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
 
 			while (set.next()) {
 
 				int class_id = set.getInt("class_id");
 
 				classes.add(new Classes(class_id, set.getString("class_name"), set.getInt("seats"),
-						getStrength(connection, class_id)));
+						StudentDAO.getClassStrength(class_id)));
 			}
-
-			statement.close();
-			set.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -43,44 +41,53 @@ public class ClassDAO {
 		return classes;
 	}
 
-	public static int getStrength(Connection connection, int class_id) {
+	public static Classes getClassWithSubjectsTeachersStudents(int classId) {
 
-		int strength = 0;
+		Classes classes = null;
 
-		try {
+		String sql = "SELECT * FROM classes WHERE class_id = " + classId;
 
-			String sql = "SELECT COUNT(class_id) AS strength FROM students WHERE class_id = ?";
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
 
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, class_id);
+			if (set.next()) {
 
-			ResultSet set = statement.executeQuery();
+				List<Students> students = StudentDAO.getStudentsWithClassId(classId);
 
-			if (set.next())
-				strength = set.getInt("strength");
+				List<Subjects> subjects = ClassSubjectsTeachersDAO.getSubjectsWithClassId(connection, classId);
 
-			statement.close();
-			set.close();
+				int class_id = set.getInt("class_id");
+
+				List<Teachers> teachers = new ArrayList<>();
+
+				for (Subjects subject : subjects)
+					teachers.add(ClassSubjectsTeachersDAO.getTeachersWithClassAndSubjectId(connection, class_id,
+							subject.getSubjectId()));
+
+				classes = new Classes(class_id, set.getString("class_name"), set.getInt("seats"),
+						StudentDAO.getClassStrength(class_id), subjects, students, teachers);
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return strength;
+		return classes;
 	}
 
-	protected static Classes getClass(Connection connection, int id) {
+	public static Classes getClass(int class_id) {
 
 		Classes classes = null;
 
-		try {
+		try (Connection connection = Database.getConnection()) {
 
 			String sql = "SELECT * FROM classes WHERE class_id = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 
-			statement.setInt(1, id);
+			statement.setInt(1, class_id);
 
 			ResultSet set = statement.executeQuery();
 
@@ -96,6 +103,27 @@ public class ClassDAO {
 		}
 
 		return classes;
+	}
+
+	public static int countOfClasses() {
+
+		int count = 0;
+
+		String sql = "SELECT COUNT(class_id) AS count FROM classes";
+
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql);) {
+
+			if (set.next())
+				count = set.getInt("count");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return count;
 	}
 
 }

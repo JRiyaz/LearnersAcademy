@@ -12,25 +12,18 @@ import main.java.com.academy.entity.Subjects;
 
 public class SubjectDAO {
 
-	public static List<Subjects> getSubjects() {
+	public static List<Subjects> getAllSubjects() {
 
 		List<Subjects> subjects = new ArrayList<>();
 
-		try (Connection connection = Database.getConnection()) {
+		String sql = "SELECT * FROM subjects";
 
-			String sql = "SELECT * FROM subjects";
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
 
-			Statement statement = connection.createStatement();
-
-			ResultSet set = statement.executeQuery(sql);
-
-			while (set.next()) {
-
+			while (set.next())
 				subjects.add(new Subjects(set.getInt("subject_id"), set.getString("name")));
-			}
-
-			statement.close();
-			set.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -40,17 +33,17 @@ public class SubjectDAO {
 		return subjects;
 	}
 
-	protected static Subjects getSubjects(Connection connection, int id) {
+	protected static Subjects getSubject(int subject_id) {
 
 		Subjects subject = null;
 
-		try {
+		try (Connection connection = Database.getConnection()) {
 
 			String sql = "SELECT * FROM subjects WHERE subject_id = ? ORDER BY name";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 
-			statement.setInt(1, id);
+			statement.setInt(1, subject_id);
 
 			ResultSet set = statement.executeQuery();
 
@@ -58,6 +51,7 @@ public class SubjectDAO {
 				subject = new Subjects(set.getInt("subject_id"), set.getString("name"));
 
 			statement.close();
+
 			set.close();
 
 		} catch (SQLException e) {

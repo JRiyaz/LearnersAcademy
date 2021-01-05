@@ -49,7 +49,7 @@ a, a:hover {
 					<c:forEach items="${classes}" var="cls">
 						<tr>
 							<th scope="row">${cls.classId }</th>
-							<td><a href="report/?id=${cls.classId }">${cls.name }</a></td>
+							<td><a href="report?classId=${cls.classId }">${cls.name }</a></td>
 							<td>${cls.seats }</td>
 							<td>${cls.strength }</td>
 						</tr>

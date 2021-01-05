@@ -1,6 +1,7 @@
 package main.java.com.academy.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,19 +37,14 @@ public class StudentDAO {
 
 		int count = 0;
 
-		try (Connection connection = Database.getConnection()) {
+		String sql = "SELECT COUNT(student_id) AS count FROM students";
 
-			String sql = "SELECT COUNT(student_id) AS count FROM students";
-
-			Statement statement = connection.createStatement();
-
-			ResultSet set = statement.executeQuery(sql);
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql);) {
 
 			if (set.next())
 				count = set.getInt("count");
-
-			statement.close();
-			set.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -62,33 +58,97 @@ public class StudentDAO {
 
 		List<Students> students = new ArrayList<>();
 
-		try (Connection connection = Database.getConnection()) {
+		String sql = "SELECT * FROM students ORDER BY student_id";
 
-			String sql = "SELECT * FROM students";
+		if (limit > 0)
+			sql += " LIMIT " + limit;
 
-			if (limit > 0)
-				sql = "SELECT * FROM students LIMIT " + limit;
+		if (limit > 0 && offset > 0)
+			sql += " OFFSET " + offset;
 
-			if (limit > 0 && offset > 0)
-				sql = "SELECT * FROM students LIMIT " + limit + " OFFSET " + offset;
-
-			Statement statement = connection.createStatement();
-
-			ResultSet set = statement.executeQuery(sql);
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
 
 			while (set.next()) {
 
 				Classes classes = null;
 
-				int classId = set.getInt("class_id");
-
-				if (get_classes) {
-					classes = ClassDAO.getClass(connection, classId);
-				}
+				if (get_classes)
+					classes = ClassDAO.getClass(set.getInt("class_id"));
 
 				students.add(new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
 						set.getString("gender"), set.getString("email_id"), classes));
 			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return students;
+	}
+
+	public static Students getStudent(int student_id) {
+
+		Students student = null;
+
+		String sql = "SELECT * FROM students WHERE student_id = " + student_id;
+
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
+
+			if (set.next())
+				student = new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
+						set.getString("gender"), set.getString("email_id"));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return student;
+	}
+
+	public static List<Students> getStudentsWithClassId(int class_id) {
+
+		List<Students> students = new ArrayList<>();
+
+		String sql = "SELECT * FROM students WHERE class_id = " + class_id +" ORDER BY student_id";
+
+		try (Connection connection = Database.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet set = statement.executeQuery(sql)) {
+
+			while (set.next())
+				students.add(new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
+						set.getString("gender"), set.getString("email_id")));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return students;
+	}
+
+	public static int getClassStrength(int class_id) {
+
+		int strength = 0;
+
+		try (Connection connection = Database.getConnection()) {
+
+			String sql = "SELECT COUNT(class_id) AS strength FROM students WHERE class_id = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setInt(1, class_id);
+
+			ResultSet set = statement.executeQuery();
+
+			if (set.next())
+				strength = set.getInt("strength");
 
 			statement.close();
 			set.close();
@@ -98,6 +158,6 @@ public class StudentDAO {
 			e.printStackTrace();
 		}
 
-		return students;
+		return strength;
 	}
 }
