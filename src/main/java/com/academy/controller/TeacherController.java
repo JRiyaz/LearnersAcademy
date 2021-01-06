@@ -38,40 +38,49 @@ public class TeacherController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0);
-		
-		int from = 0;
-		int to = 10;
 
-		int currentPage = 1;
+		if (request.getServletPath().equals("/teacher")) {
 
-		if (request.getParameter("page") != null)
-			currentPage = Integer.parseInt(request.getParameter("page"));
+			int teacherId = 1;
 
-		if (currentPage > 1) {
+			if (request.getParameter("teacherId") != null)
+				teacherId = Integer.parseInt(request.getParameter("teacherId"));
 
-			to *= currentPage;
-			from = to - 10;
+			Teachers teacher = TeacherDAO.getTeacherWithClassesAndSubjects(teacherId);
+
+			request.setAttribute("teacher", teacher);
+
+			request.getRequestDispatcher("teacher.jsp").forward(request, response);
+
+		} else {
+
+			int from = 0;
+			int to = 10;
+
+			int currentPage = 1;
+
+			if (request.getParameter("page") != null)
+				currentPage = Integer.parseInt(request.getParameter("page"));
+
+			if (currentPage > 1) {
+
+				to *= currentPage;
+				from = to - 10;
+			}
+
+			List<Teachers> teachers = TeacherDAO.getFewTeachersWithLimitAndOffset(10, from, false, false);
+
+			int count = TeacherDAO.countOfTeachers();
+
+			int pages = (int) Math.round(((double) count) / 10);
+
+			request.setAttribute("teachers", teachers);
+
+			request.setAttribute("pages", pages);
+
+			request.setAttribute("currentPage", currentPage);
+
+			request.getRequestDispatcher("teachers.jsp").forward(request, response);
 		}
-
-		boolean showClass = false;
-		boolean showSubjects = true;
-
-		List<Teachers> teachers = TeacherDAO.getFewTeachersWithLimitAndOffset(10, from, showClass, showSubjects);
-
-		int count = TeacherDAO.countOfTeachers();
-
-		int pages = (int) Math.round(((double) count) / 10);
-
-		request.setAttribute("teachers", teachers);
-
-		request.setAttribute("showClass", showClass);
-
-		request.setAttribute("showSubjects", showSubjects);
-
-		request.setAttribute("pages", pages);
-
-		request.setAttribute("currentPage", currentPage);
-
-		request.getRequestDispatcher("teachers.jsp").forward(request, response);
 	}
 }

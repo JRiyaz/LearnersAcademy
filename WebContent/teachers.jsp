@@ -36,53 +36,23 @@ prefix="c"%>
           <h3 class="display-5">Master List Of Teachers</h3>
           <p class="lead mt-3">
             Here you have the master list of all the Teachers with respective
-            Subjects with pagination support.
+            Subjects with pagination support. Click on the teacher to find more details.
           </p>
         </div>
 
-        <!-- Table Content Beigns -->
+        <!-- Table Content Begin -->
         <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">S.No</th>
               <th scope="col">Teacher Name</th>
-              <th scope="col">Age</th>
-              <th scope="col">Gender</th>
-              <th scope="col">Email ID</th>
-              <c:if test="${showSubjects }">
-                <th scope="col">Subjects</th>
-              </c:if>
-              <c:if test="${showClass }">
-                <th scope="col">Classes</th>
-              </c:if>
             </tr>
           </thead>
           <tbody>
             <c:forEach items="${teachers}" var="teacher">
               <tr>
                 <th scope="row">${teacher.teacherId }</th>
-                <td>${teacher.name }</td>
-                <td>${teacher.age }</td>
-                <td>${teacher.gender }</td>
-                <td>${teacher.emailId }</td>
-                <c:if test="${showSubjects }">
-                  <td class="d-flex px-0">
-                    <c:forEach var="subject" items="${teacher.subjects}">
-                      <span class="mx-1 badge badge-pill badge-primary p-2"
-                        >${subject.name }</span
-                      >
-                    </c:forEach>
-                  </td>
-                </c:if>
-                <c:if test="${showClass }">
-                  <td class="d-flex px-0">
-                    <c:forEach var="classes" items="${teacher.classes}">
-                      <span class="mx-1 badge badge-pill badge-success p-2"
-                        >${classes.name }</span
-                      >
-                    </c:forEach>
-                  </td>
-                </c:if>
+                <td><a href="teacher?teacherId=${teacher.teacherId }">${teacher.name }</a></td>
               </tr>
             </c:forEach>
           </tbody>
