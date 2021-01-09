@@ -1,5 +1,9 @@
 package main.java.com.academy.dao;
 
+import main.java.com.academy.entity.Classes;
+import main.java.com.academy.entity.Subjects;
+import main.java.com.academy.entity.Teachers;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,147 +11,143 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.academy.entity.Classes;
-import main.java.com.academy.entity.Subjects;
-import main.java.com.academy.entity.Teachers;
-
 public class TeacherDAO {
 
-	public static List<Teachers> getAllTeachersWithClassesAndSubjects() {
+    public static List<Teachers> getFewTeachersWithLimitAndOffset(int limit, int offset,
+                                                                  boolean need_classes,
+                                                                  boolean need_subjects) {
 
-		return getTeachersWithLimtAndOffset(0, 0, true, true);
-	}
+        return getTeachersWithLimtAndOffset(limit, offset, need_classes, need_subjects);
+    }
 
-	public static List<Teachers> getAllTeachersWithClasses() {
+    public static int countOfTeachers() {
 
-		return getTeachersWithLimtAndOffset(0, 0, true, false);
-	}
+        int count = 0;
 
-	public static List<Teachers> getAllTeachersWithSubjects() {
+        String sql = "SELECT COUNT(teacher_id) AS count FROM teachers";
 
-		return getTeachersWithLimtAndOffset(0, 0, false, true);
-	}
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-	public static List<Teachers> getFewTeachers(int limit, boolean need_classes, boolean need_subjects) {
+            if (set.next())
+                count = set.getInt("count");
 
-		return getTeachersWithLimtAndOffset(limit, 1, need_classes, need_subjects);
-	}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	public static List<Teachers> getFewTeachersWithLimitAndOffset(int limit, int offset, boolean need_classes,
-			boolean need_subjects) {
+        return count;
+    }
 
-		return getTeachersWithLimtAndOffset(limit, offset, need_classes, need_subjects);
-	}
+    private static List<Teachers> getTeachersWithLimtAndOffset(int limit, int offset,
+                                                               boolean get_classes,
+                                                               boolean get_subjects) {
 
-	public static int countOfTeachers() {
+        List<Teachers> teachers = new ArrayList<>();
 
-		int count = 0;
+        String sql = "SELECT * FROM teachers ORDER BY teacher_id";
 
-		String sql = "SELECT COUNT(teacher_id) AS count FROM teachers";
+        if (limit > 0)
+            sql += " LIMIT " + limit;
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        if (limit > 0 && offset > 0)
+            sql += " OFFSET " + offset;
 
-			if (set.next())
-				count = set.getInt("count");
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            while (set.next()) {
 
-		return count;
-	}
+                List<Subjects> subjects = new ArrayList<>();
 
-	private static List<Teachers> getTeachersWithLimtAndOffset(int limit, int offset, boolean get_classes,
-			boolean get_subjects) {
+                List<Classes> classes = new ArrayList<>();
 
-		List<Teachers> teachers = new ArrayList<>();
+                int teacherId = set.getInt("teacher_id");
 
-		String sql = "SELECT * FROM teachers ORDER BY teacher_id";
+                if (get_subjects)
+                    subjects.addAll(ClassSubjectsTeachersDAO
+                            .getSubjectsWithTeacherId(connection, teacherId));
 
-		if (limit > 0)
-			sql += " LIMIT " + limit;
+                if (get_classes)
+                    classes.addAll(ClassSubjectsTeachersDAO
+                            .getClassesWithTeacherId(connection, teacherId));
 
-		if (limit > 0 && offset > 0)
-			sql += " OFFSET " + offset;
+                teachers.add(new Teachers(teacherId,
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id"),
+                        subjects, classes));
+            }
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-			while (set.next()) {
+        return teachers;
+    }
 
-				List<Subjects> subjects = new ArrayList<>();
+    public static Teachers getTeacher(int teacher_id) {
 
-				List<Classes> classes = new ArrayList<>();
+        Teachers teacher = null;
 
-				int teacherId = set.getInt("teacher_id");
+        String sql = "SELECT * FROM teachers WHERE teacher_id = " + teacher_id;
 
-				if (get_subjects)
-					subjects.addAll(ClassSubjectsTeachersDAO.getSubjectsWithTeacherId(connection, teacherId));
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-				if (get_classes)
-					classes.addAll(ClassSubjectsTeachersDAO.getClassesWithTeacherId(connection, teacherId));
+            if (set.next())
+                teacher = new Teachers(set.getInt("teacher_id"),
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id"));
 
-				teachers.add(new Teachers(teacherId, set.getString("name"), set.getInt("age"), set.getString("gender"),
-						set.getString("email_id"), subjects, classes));
-			}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        return teacher;
+    }
 
-		return teachers;
-	}
+    public static Teachers getTeacherWithClassesAndSubjects(int teacher_id) {
 
-	public static Teachers getTeacher(int teacher_id) {
+        Teachers teacher = null;
 
-		Teachers teacher = null;
+        String sql = "SELECT * FROM teachers WHERE teacher_id = " + teacher_id;
 
-		String sql = "SELECT * FROM teachers WHERE teacher_id = " + teacher_id;
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+            if (set.next()) {
 
-			if (set.next())
-				teacher = new Teachers(set.getInt("teacher_id"), set.getString("name"), set.getInt("age"),
-						set.getString("gender"), set.getString("email_id"));
+                int teacherId = set.getInt("teacher_id");
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                List<Classes> classes = ClassSubjectsTeachersDAO
+                        .getClassesWithTeacherId(connection, teacherId);
+                List<Subjects> subjects = ClassSubjectsTeachersDAO
+                        .getSubjectsWithTeacherId(connection, teacherId);
 
-		return teacher;
-	}
+                teacher = new Teachers(teacherId,
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id"),
+                        subjects, classes);
+            }
 
-	public static Teachers getTeacherWithClassesAndSubjects(int teacher_id) {
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		Teachers teacher = null;
-
-		String sql = "SELECT * FROM teachers WHERE teacher_id = " + teacher_id;
-
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
-
-			if (set.next()) {
-				int teacherId = set.getInt("teacher_id");
-				List<Classes> classes = ClassSubjectsTeachersDAO.getClassesWithTeacherId(connection, teacherId);
-				List<Subjects> subjects = ClassSubjectsTeachersDAO.getSubjectsWithTeacherId(connection, teacherId);
-				teacher = new Teachers(teacherId, set.getString("name"), set.getInt("age"), set.getString("gender"),
-						set.getString("email_id"), subjects, classes);
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return teacher;
-	}
+        return teacher;
+    }
 }

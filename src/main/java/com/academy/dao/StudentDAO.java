@@ -1,163 +1,153 @@
 package main.java.com.academy.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.com.academy.entity.Classes;
 import main.java.com.academy.entity.Students;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class StudentDAO {
 
-	public static List<Students> getAllStudents() {
+    public static List<Students> getFewStudentsWithOffset(int limit, int offset, boolean need_classes) {
 
-		return getStudentsWithLimtAndOffset(0, 0, false);
-	}
+        return getStudentsWithLimtAndOffset(limit, offset, need_classes);
+    }
 
-	public static List<Students> getAllStudentsWithClass() {
+    public static int countOfStudents() {
 
-		return getStudentsWithLimtAndOffset(0, 0, true);
-	}
+        int count = 0;
 
-	public static List<Students> getFewStudents(int limit, boolean need_classes) {
+        String sql = "SELECT COUNT(student_id) AS count FROM students";
 
-		return getStudentsWithLimtAndOffset(limit, 1, need_classes);
-	}
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-	public static List<Students> getFewStudentsWithOffset(int limit, int offset, boolean need_classes) {
+            if (set.next())
+                count = set.getInt("count");
 
-		return getStudentsWithLimtAndOffset(limit, offset, need_classes);
-	}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	public static int countOfStudents() {
+        return count;
+    }
 
-		int count = 0;
+    private static List<Students> getStudentsWithLimtAndOffset(int limit, int offset, boolean get_classes) {
 
-		String sql = "SELECT COUNT(student_id) AS count FROM students";
+        List<Students> students = new ArrayList<>();
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql);) {
+        String sql = "SELECT * FROM students ORDER BY student_id";
 
-			if (set.next())
-				count = set.getInt("count");
+        if (limit > 0)
+            sql += " LIMIT " + limit;
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        if (limit > 0 && offset > 0)
+            sql += " OFFSET " + offset;
 
-		return count;
-	}
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-	private static List<Students> getStudentsWithLimtAndOffset(int limit, int offset, boolean get_classes) {
+            while (set.next()) {
 
-		List<Students> students = new ArrayList<>();
+                Classes classes = null;
 
-		String sql = "SELECT * FROM students ORDER BY student_id";
+                if (get_classes)
+                    classes = ClassDAO.getClass(set.getInt("class_id"));
 
-		if (limit > 0)
-			sql += " LIMIT " + limit;
+                students.add(new Students(set.getInt("student_id"),
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id"), classes));
+            }
 
-		if (limit > 0 && offset > 0)
-			sql += " OFFSET " + offset;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        return students;
+    }
 
-			while (set.next()) {
+    public static Students getStudent(int student_id) {
 
-				Classes classes = null;
+        Students student = null;
 
-				if (get_classes)
-					classes = ClassDAO.getClass(set.getInt("class_id"));
+        String sql = "SELECT * FROM students WHERE student_id = " + student_id;
 
-				students.add(new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
-						set.getString("gender"), set.getString("email_id"), classes));
-			}
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            if (set.next())
+                student = new Students(set.getInt("student_id"),
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id"));
 
-		return students;
-	}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	public static Students getStudent(int student_id) {
+        return student;
+    }
 
-		Students student = null;
+    public static List<Students> getStudentsWithClassId(int class_id) {
 
-		String sql = "SELECT * FROM students WHERE student_id = " + student_id;
+        List<Students> students = new ArrayList<>();
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        String sql = "SELECT * FROM students WHERE class_id = " + class_id + " ORDER BY student_id";
 
-			if (set.next())
-				student = new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
-						set.getString("gender"), set.getString("email_id"));
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            while (set.next())
+                students.add(new Students(set.getInt("student_id"),
+                        set.getString("name"),
+                        set.getInt("age"),
+                        set.getString("gender"),
+                        set.getString("email_id")));
 
-		return student;
-	}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	public static List<Students> getStudentsWithClassId(int class_id) {
+        return students;
+    }
 
-		List<Students> students = new ArrayList<>();
+    public static int getClassStrength(int class_id) {
 
-		String sql = "SELECT * FROM students WHERE class_id = " + class_id +" ORDER BY student_id";
+        int strength = 0;
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        try (Connection connection = Database.getConnection()) {
 
-			while (set.next())
-				students.add(new Students(set.getInt("student_id"), set.getString("name"), set.getInt("age"),
-						set.getString("gender"), set.getString("email_id")));
+            String sql = "SELECT COUNT(class_id) AS strength FROM students WHERE class_id = ?";
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-		return students;
-	}
+            statement.setInt(1, class_id);
 
-	public static int getClassStrength(int class_id) {
+            ResultSet set = statement.executeQuery();
 
-		int strength = 0;
+            if (set.next())
+                strength = set.getInt("strength");
 
-		try (Connection connection = Database.getConnection()) {
+            statement.close();
+            set.close();
 
-			String sql = "SELECT COUNT(class_id) AS strength FROM students WHERE class_id = ?";
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-			PreparedStatement statement = connection.prepareStatement(sql);
-
-			statement.setInt(1, class_id);
-
-			ResultSet set = statement.executeQuery();
-
-			if (set.next())
-				strength = set.getInt("strength");
-
-			statement.close();
-			set.close();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return strength;
-	}
+        return strength;
+    }
 }

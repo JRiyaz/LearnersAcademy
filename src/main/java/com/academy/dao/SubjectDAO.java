@@ -1,64 +1,60 @@
 package main.java.com.academy.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import main.java.com.academy.entity.Subjects;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.academy.entity.Subjects;
-
 public class SubjectDAO {
 
-	public static List<Subjects> getAllSubjects() {
+    public static List<Subjects> getAllSubjects() {
 
-		List<Subjects> subjects = new ArrayList<>();
+        List<Subjects> subjects = new ArrayList<>();
 
-		String sql = "SELECT * FROM subjects";
+        String sql = "SELECT * FROM subjects ORDER BY subject_id";
 
-		try (Connection connection = Database.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet set = statement.executeQuery(sql)) {
+        try (Connection connection = Database.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(sql)) {
 
-			while (set.next())
-				subjects.add(new Subjects(set.getInt("subject_id"), set.getString("name")));
+            while (set.next())
+                subjects.add(new Subjects(set.getInt("subject_id"), set.getString("name")));
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return subjects;
-	}
+        return subjects;
+    }
 
-	protected static Subjects getSubject(int subject_id) {
+    protected static Subjects getSubject(int subject_id) {
 
-		Subjects subject = null;
+        Subjects subject = null;
 
-		try (Connection connection = Database.getConnection()) {
+        try (Connection connection = Database.getConnection()) {
 
-			String sql = "SELECT * FROM subjects WHERE subject_id = ? ORDER BY name";
+            String sql = "SELECT * FROM subjects WHERE subject_id = ? ORDER BY name";
 
-			PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-			statement.setInt(1, subject_id);
+            statement.setInt(1, subject_id);
 
-			ResultSet set = statement.executeQuery();
+            ResultSet set = statement.executeQuery();
 
-			if (set.next())
-				subject = new Subjects(set.getInt("subject_id"), set.getString("name"));
+            if (set.next())
+                subject = new Subjects(set.getInt("subject_id"), set.getString("name"));
 
-			statement.close();
+            statement.close();
 
-			set.close();
+            set.close();
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return subject;
-	}
+        return subject;
+    }
 }

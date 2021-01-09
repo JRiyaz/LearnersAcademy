@@ -7,45 +7,46 @@ import java.util.Properties;
 
 public class Database implements AutoCloseable {
 
-	private static Connection connection = null;
+    private static Connection connection = null;
 
-	public static Connection getConnection() {
+    public static Connection getConnection() {
 
-		try {
+        try {
 
-			Properties prop = new Database().getProperties();
+            Properties prop = new Database().getProperties();
 
-			final String driver = prop.getProperty("db.driver");
+            final String driver = prop.getProperty("db.driver");
 
-			final String url = prop.getProperty("db.url");
+            final String url = prop.getProperty("db.url");
 
-			final String username = prop.getProperty("db.user");
+            final String username = prop.getProperty("db.user");
 
-			final String pass = prop.getProperty("db.password");
+            final String pass = prop.getProperty("db.password");
 
-			Class.forName(driver);
+            Class.forName(driver);
 
-			connection = DriverManager.getConnection(url, username, pass);
+            connection = DriverManager.getConnection(url, username, pass);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			e.printStackTrace();
-		}
-		return connection;
-	}
+            e.printStackTrace();
+        }
+        return connection;
+    }
 
-	public Properties getProperties() throws IOException {
+    public Properties getProperties() throws IOException {
 
-		Properties prop = new Properties();
-		prop.load(this.getClass().getClassLoader().getResourceAsStream("/config.properties"));
+        Properties prop = new Properties();
+        prop.load(this.getClass().getClassLoader()
+                .getResourceAsStream("/config.properties"));
 
-		return prop;
-	}
+        return prop;
+    }
 
-	@Override
-	public void close() throws Exception {
+    @Override
+    public void close() throws Exception {
 
-		if (connection != null)
-			connection.close();
-	}
+        if (connection != null)
+            connection.close();
+    }
 }
