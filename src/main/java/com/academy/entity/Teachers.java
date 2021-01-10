@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * This is an entity class for the database table public.teachers
+ *
+ * @author Riyaz J
+ * @version 1.1
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

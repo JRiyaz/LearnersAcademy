@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Servlet implementation class Classes
+ * Servlet implementation class ClassController
+ * This class handles get request of url pattern '/classes'.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebServlet(name = "classes", urlPatterns = {"/classes"})
 public class ClassController extends HttpServlet {
@@ -27,6 +31,13 @@ public class ClassController extends HttpServlet {
     }
 
     /**
+     * This method takes get request of url pattern '/classes' and fetch the list of all class records
+     * from {@link ClassDAO} and forward the request to classes.jsp file.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
+     * @throws ServletException, IOException
+     * @jsp /WebContent/classes.jsp
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */

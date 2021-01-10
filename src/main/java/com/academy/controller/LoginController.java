@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class LoginController
+ * This class handles get and post request of url pattern '/login'.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
@@ -27,6 +31,12 @@ public class LoginController extends HttpServlet {
     }
 
     /**
+     * This method takes get request of url pattern '/login' and forward the request to login.html file.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
+     * @throws ServletException, IOException
+     * @jsp /WebContent/login.html
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
@@ -37,11 +47,18 @@ public class LoginController extends HttpServlet {
     }
 
     /**
+     * This method takes post request of url pattern '/login'.
+     * This method takes 'username' and 'password' parameters and checks if user is present or not.
+     * If user is present, the request will be redirected to {@link HomeController} with login success message.
+     * If user is not present, the request will be redirected to {@link LoginController} with login failure message.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         // TODO Auto-generated method stub
 
         String user_name = request.getParameter("username");

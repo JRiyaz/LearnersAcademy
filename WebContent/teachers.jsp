@@ -36,7 +36,8 @@ prefix="c"%>
           <h3 class="display-5">Master List Of Teachers</h3>
           <p class="lead mt-3">
             Here you have the master list of all the Teachers with respective
-            Subjects with pagination support. Click on the teacher to find more details.
+            Subjects with pagination support. Click on the teacher to find more
+            details.
           </p>
         </div>
 
@@ -52,7 +53,11 @@ prefix="c"%>
             <c:forEach items="${teachers}" var="teacher">
               <tr>
                 <th scope="row">${teacher.teacherId }</th>
-                <td><a href="teacher?teacherId=${teacher.teacherId }">${teacher.name }</a></td>
+                <td>
+                  <a href="teacher?teacherId=${teacher.teacherId }"
+                    >${teacher.name }</a
+                  >
+                </td>
               </tr>
             </c:forEach>
           </tbody>

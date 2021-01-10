@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class HomeController
+ * This class handles get request of url pattern '/home'.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebServlet(name = "home", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
@@ -23,6 +27,12 @@ public class HomeController extends HttpServlet {
     }
 
     /**
+     * This method takes get request of url pattern '/home' and include the index.jsp file in response.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
+     * @throws ServletException, IOException
+     * @jsp /WebContent/index.jsp
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */

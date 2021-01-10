@@ -11,15 +11,36 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a DAO class for {@link Teachers} entity.
+ *
+ * @author Riyaz J
+ * @version 1.1
+ */
 public class TeacherDAO {
 
+    /**
+     * This method fetches list of all the Teachers for the given method arguments. If there are no Teachers it will
+     * return empty list.
+     *
+     * @param limit         - int limit of records
+     * @param offset        - int offset from which record to be fetched
+     * @param need_classes  - boolean if need_classes
+     * @param need_subjects - boolean if need_subjects
+     * @return List<Teachers>
+     */
     public static List<Teachers> getFewTeachersWithLimitAndOffset(int limit, int offset,
                                                                   boolean need_classes,
                                                                   boolean need_subjects) {
 
-        return getTeachersWithLimtAndOffset(limit, offset, need_classes, need_subjects);
+        return getTeachersWithLimitAndOffset(limit, offset, need_classes, need_subjects);
     }
 
+    /**
+     * This method fetches the count of teachers in the database and return the count of the teachers.
+     *
+     * @return int
+     */
     public static int countOfTeachers() {
 
         int count = 0;
@@ -41,9 +62,18 @@ public class TeacherDAO {
         return count;
     }
 
-    private static List<Teachers> getTeachersWithLimtAndOffset(int limit, int offset,
-                                                               boolean get_classes,
-                                                               boolean get_subjects) {
+    /**
+     * This method is internal implementation of the method getFewTeachersWithLimitAndOffset
+     *
+     * @param limit        - int limit of records
+     * @param offset       - int offset from which record to be fetched
+     * @param get_classes  - boolean get_classes
+     * @param get_subjects - boolean get_subjects
+     * @return List<Teachers>
+     */
+    private static List<Teachers> getTeachersWithLimitAndOffset(int limit, int offset,
+                                                                boolean get_classes,
+                                                                boolean get_subjects) {
 
         List<Teachers> teachers = new ArrayList<>();
 
@@ -91,6 +121,13 @@ public class TeacherDAO {
         return teachers;
     }
 
+    /**
+     * This method fetches the teacher for the given teacher_id and returns the Teacher object. If there is no Teacher
+     * it will return empty teacher object.
+     *
+     * @param teacher_id - int teacher_id
+     * @return Teachers
+     */
     public static Teachers getTeacher(int teacher_id) {
 
         Teachers teacher = null;
@@ -116,6 +153,13 @@ public class TeacherDAO {
         return teacher;
     }
 
+    /**
+     * This method fetches the teacher with all the classes and subjects associated with the teacher and returns the
+     * teacher object.
+     *
+     * @param teacher_id - int teacher_id
+     * @return Teachers
+     */
     public static Teachers getTeacherWithClassesAndSubjects(int teacher_id) {
 
         Teachers teacher = null;

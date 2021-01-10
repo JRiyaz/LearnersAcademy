@@ -13,6 +13,10 @@ import java.util.List;
 
 /**
  * Servlet implementation class StudentController
+ * This class handles get request of url pattern '/students'.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebServlet(name = "students", urlPatterns = {"/students"})
 public class StudentController extends HttpServlet {
@@ -27,6 +31,13 @@ public class StudentController extends HttpServlet {
     }
 
     /**
+     * This method takes get request of url pattern '/students' and fetch the list of all Student records
+     * from {@link StudentDAO} and forward the request to students.jsp file.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
+     * @throws ServletException, IOException
+     * @jsp /WebContent/students.jsp
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */

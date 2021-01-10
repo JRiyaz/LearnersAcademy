@@ -64,9 +64,9 @@ prefix="c"%>
                 <td>${student.emailId }</td>
                 <c:if test="${showClass }">
                   <td class="d-flex px-0">
-                      <span class="mx-1 badge badge-pill badge-success p-2"
-                        >${student.cls.name }</span
-                      >
+                    <span class="mx-1 badge badge-pill badge-success p-2"
+                      >${student.cls.name }</span
+                    >
                   </td>
                 </c:if>
               </tr>

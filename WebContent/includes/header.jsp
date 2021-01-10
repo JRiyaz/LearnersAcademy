@@ -38,7 +38,7 @@ pageEncoding="ISO-8859-1"%>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="classes">Classes</a>
     <a class="p-2 text-dark" href="subjects">Subjects</a>
-    <a class="p-2 text-dark" href="teachers">Teachers</a>    
+    <a class="p-2 text-dark" href="teachers">Teachers</a>
     <a class="p-2 text-dark" href="students">Students</a>
     <a class="p-2 text-dark" href="report">Class Report</a>
   </nav>
@@ -59,7 +59,9 @@ pageEncoding="ISO-8859-1"%>
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
       <button class="dropdown-item d-inline-block" type="button">
-        <a class="btn btn-outline-primary w-100 mx-auto" href="logout">Logout</a>
+        <a class="btn btn-outline-primary w-100 mx-auto" href="logout"
+          >Logout</a
+        >
       </button>
     </div>
   </div>

@@ -8,7 +8,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet Filter implementation class Authentication
+ * Servlet Filter implementation class AuthenticationFilter
+ * This class checks for the authentication for all the request except '/home' and '/login'
+ * before hitting the request to the actual controllers.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebFilter(filterName = "authentication", urlPatterns = {"/*"})
 public class AuthenticationFilter implements Filter {
@@ -28,6 +33,9 @@ public class AuthenticationFilter implements Filter {
     }
 
     /**
+     * This method checks for the authentication for different url request and allow the request to hit the
+     * actual controller if proper condition are meet, if not will return the request with an error message.
+     *
      * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
      */
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)

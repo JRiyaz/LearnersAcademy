@@ -9,8 +9,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a DAO class for the {@link Classes} entity.
+ *
+ * @author Riyaz J
+ * @version 1.1
+ */
 public class ClassDAO {
 
+    /**
+     * This method fetches all the classes with respective strength of students for that class from the database
+     * and returns list of Classes. If there are no classes present in the database it will return empty
+     * list of classes.
+     *
+     * @return List<Classes>
+     */
     public static List<Classes> getAllClassesWithStrength() {
 
         List<Classes> classes = new ArrayList<>();
@@ -39,11 +52,18 @@ public class ClassDAO {
         return classes;
     }
 
-    public static Classes getClassWithSubjectsTeachersStudents(int classId) {
+    /**
+     * This method fetches all the Subjects, Teachers and, Students of a particular Class with class_id and
+     * returns Classes object. If there is no class with the class_id it will return empty Classes object.
+     *
+     * @param class_id - int class id of the Classes
+     * @return Classes
+     */
+    public static Classes getClassWithSubjectsTeachersStudents(int class_id) {
 
         Classes classes = null;
 
-        String sql = "SELECT * FROM classes WHERE class_id = " + classId;
+        String sql = "SELECT * FROM classes WHERE class_id = " + class_id;
 
         try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
@@ -51,11 +71,9 @@ public class ClassDAO {
 
             if (set.next()) {
 
-                List<Students> students = StudentDAO.getStudentsWithClassId(classId);
+                List<Students> students = StudentDAO.getStudentsWithClassId(class_id);
 
-                List<Subjects> subjects = ClassSubjectsTeachersDAO.getSubjectsWithClassId(connection, classId);
-
-                int class_id = set.getInt("class_id");
+                List<Subjects> subjects = ClassSubjectsTeachersDAO.getSubjectsWithClassId(connection, class_id);
 
                 List<Teachers> teachers = new ArrayList<>();
 
@@ -78,6 +96,13 @@ public class ClassDAO {
         return classes;
     }
 
+    /**
+     * This method fetches the class with the given class_id and return the Classes object. If there is no class with
+     * given class_id it will return empty Classes object.
+     *
+     * @param class_id - int class id of the Classes
+     * @return Classes
+     */
     public static Classes getClass(int class_id) {
 
         Classes classes = null;
@@ -108,6 +133,11 @@ public class ClassDAO {
         return classes;
     }
 
+    /**
+     * This method fetches the count of all the classes in the database and return the count of classes.
+     *
+     * @return count
+     */
     public static int countOfClasses() {
 
         int count = 0;
@@ -116,7 +146,7 @@ public class ClassDAO {
 
         try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet set = statement.executeQuery(sql);) {
+             ResultSet set = statement.executeQuery(sql)) {
 
             if (set.next())
                 count = set.getInt("count");

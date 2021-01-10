@@ -58,10 +58,10 @@ pageEncoding="ISO-8859-1"%>
                   </button>
                 </div>
               </h6>
-              
+
               <!-- Row Begin -->
               <div class="row">
-              <!-- Tabs Headers Begin -->
+                <!-- Tabs Headers Begin -->
                 <div class="col-4">
                   <div class="list-group" id="list-tab" role="tablist">
                     <a
@@ -91,7 +91,7 @@ pageEncoding="ISO-8859-1"%>
                       aria-controls="teachers"
                       >Teachers</a
                     >
-                    
+
                     <a
                       class="list-group-item list-group-item-action"
                       id="list-students-list"
@@ -113,12 +113,11 @@ pageEncoding="ISO-8859-1"%>
                   </div>
                 </div>
                 <!-- Tabs Headers End -->
-                
+
                 <!-- Tabs Content Begin -->
                 <div class="col-8">
                   <div class="tab-content my-3" id="nav-tabContent">
-                  
-                  <!-- Class Tab Begin -->
+                    <!-- Class Tab Begin -->
                     <div
                       class="tab-pane fade show active"
                       id="list-classes"
@@ -134,16 +133,14 @@ pageEncoding="ISO-8859-1"%>
                           of the school.</strong
                         >
                         <div class="d-block text-muted">
-                          <a
-                            href="classes"
-                            class="btn btn-outline-success"
+                          <a href="classes" class="btn btn-outline-success"
                             >View Classes</a
                           >
                         </div>
                       </div>
                     </div>
                     <!-- Class Tab End -->
-                    
+
                     <!-- Subjects Tab Begin -->
                     <div
                       class="tab-pane fade"
@@ -160,16 +157,14 @@ pageEncoding="ISO-8859-1"%>
                           of the school.</strong
                         >
                         <div class="d-block text-muted">
-                          <a
-                            href="subjects"
-                            class="btn btn-outline-success"
+                          <a href="subjects" class="btn btn-outline-success"
                             >View Subjects</a
                           >
                         </div>
                       </div>
                     </div>
                     <!-- Subjects Tab Ends -->
-                    
+
                     <!-- Teachers Tab Begin -->
                     <div
                       class="tab-pane fade"
@@ -186,16 +181,14 @@ pageEncoding="ISO-8859-1"%>
                           of the school.</strong
                         >
                         <div class="d-block text-muted">
-                          <a
-                            href="teachers"
-                            class="btn btn-outline-success"
+                          <a href="teachers" class="btn btn-outline-success"
                             >View Teachers</a
                           >
                         </div>
                       </div>
                     </div>
                     <!-- Teachers Tab End -->
-                    
+
                     <!-- Subjects Tab Begin -->
                     <div
                       class="tab-pane fade"
@@ -208,7 +201,8 @@ pageEncoding="ISO-8859-1"%>
                           Master List of Subjects
                         </h3>
                         <strong class="text-muted my-4 d-block"
-                          >Here you can view the master list of all Subjects.</strong
+                          >Here you can view the master list of all
+                          Subjects.</strong
                         >
                         <div class="d-block text-muted">
                           <a
@@ -220,7 +214,7 @@ pageEncoding="ISO-8859-1"%>
                       </div>
                     </div>
                     <!-- Subjects Tab End -->
-                    
+
                     <!-- Class Report Tab Begin -->
                     <div
                       class="tab-pane fade"
@@ -238,9 +232,7 @@ pageEncoding="ISO-8859-1"%>
                           for a perticular class.</strong
                         >
                         <div class="d-block text-muted">
-                          <a
-                            href="classes"
-                            class="btn btn-outline-success"
+                          <a href="classes" class="btn btn-outline-success"
                             >View Class Report</a
                           >
                         </div>

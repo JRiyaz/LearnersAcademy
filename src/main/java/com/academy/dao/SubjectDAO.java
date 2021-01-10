@@ -6,8 +6,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a DAO class for {@link Subjects} entity.
+ *
+ * @author Riyaz J
+ * @version 1.1
+ */
 public class SubjectDAO {
 
+    /**
+     * This method fetches list of all subjects in the database and returns the list of subjects. If there are no
+     * subject it will return empty list.
+     *
+     * @return List<Subjects>
+     */
     public static List<Subjects> getAllSubjects() {
 
         List<Subjects> subjects = new ArrayList<>();
@@ -29,6 +41,13 @@ public class SubjectDAO {
         return subjects;
     }
 
+    /**
+     * This method fetches the subjects for the given subject_id. If there is no subject it will return empty
+     * subject object.
+     *
+     * @param subject_id - int subject_id
+     * @return Subjects
+     */
     protected static Subjects getSubject(int subject_id) {
 
         Subjects subject = null;

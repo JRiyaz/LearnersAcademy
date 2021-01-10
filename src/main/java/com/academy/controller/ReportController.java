@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class Report
+ * Servlet implementation class ReportController
+ * This class handles get request of url pattern '/report'.
+ *
+ * @author Riyaz J
+ * @version 1.1
  */
 @WebServlet(name = "report", urlPatterns = {"/report"})
 public class ReportController extends HttpServlet {
@@ -26,6 +30,14 @@ public class ReportController extends HttpServlet {
     }
 
     /**
+     * This method takes get request of url pattern '/request' and classId parameter and fetch the particular class
+     * records with all the Subjects, Students and, Teachers from {@link ClassDAO} and forward the request to
+     * report.jsp file.
+     *
+     * @param request  - {@link HttpServletRequest}
+     * @param response - {@link HttpServletResponse}
+     * @throws ServletException, IOException
+     * @jsp /WebContent/report.jsp
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */

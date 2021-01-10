@@ -7,13 +7,32 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a DAO class for {@link Students} entity.
+ *
+ * @author Riyaz J
+ * @version 1.1
+ */
 public class StudentDAO {
 
+    /**
+     * This method returns the list of Students for the given method arguments.
+     *
+     * @param limit        - int limit of records
+     * @param offset       - int offset from which records to be fetched
+     * @param need_classes - boolean need_classes
+     * @return List<Students>
+     */
     public static List<Students> getFewStudentsWithOffset(int limit, int offset, boolean need_classes) {
 
-        return getStudentsWithLimtAndOffset(limit, offset, need_classes);
+        return getStudentsWithLimitAndOffset(limit, offset, need_classes);
     }
 
+    /**
+     * This method counts all the students in the database and return the count of students.
+     *
+     * @return int
+     */
     public static int countOfStudents() {
 
         int count = 0;
@@ -35,7 +54,16 @@ public class StudentDAO {
         return count;
     }
 
-    private static List<Students> getStudentsWithLimtAndOffset(int limit, int offset, boolean get_classes) {
+    /**
+     * This method fetches all the students for the given method arguments and returns a list of Students.
+     * If there are not students then it will return empty list.
+     *
+     * @param limit       - int limit of records
+     * @param offset      - int offset from which records to be fetched
+     * @param get_classes - boolean get_classes
+     * @return List<Students>
+     */
+    private static List<Students> getStudentsWithLimitAndOffset(int limit, int offset, boolean get_classes) {
 
         List<Students> students = new ArrayList<>();
 
@@ -73,31 +101,13 @@ public class StudentDAO {
         return students;
     }
 
-    public static Students getStudent(int student_id) {
-
-        Students student = null;
-
-        String sql = "SELECT * FROM students WHERE student_id = " + student_id;
-
-        try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet set = statement.executeQuery(sql)) {
-
-            if (set.next())
-                student = new Students(set.getInt("student_id"),
-                        set.getString("name"),
-                        set.getInt("age"),
-                        set.getString("gender"),
-                        set.getString("email_id"));
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return student;
-    }
-
+    /**
+     * This method returns the list of students for the given class_id. If there are no students it will return
+     * empty list.
+     *
+     * @param class_id - int class_id
+     * @return List<Students>
+     */
     public static List<Students> getStudentsWithClassId(int class_id) {
 
         List<Students> students = new ArrayList<>();
@@ -123,6 +133,12 @@ public class StudentDAO {
         return students;
     }
 
+    /**
+     * This method fetches the count of all the students for the given class_id.
+     *
+     * @param class_id - int class_id
+     * @return int
+     */
     public static int getClassStrength(int class_id) {
 
         int strength = 0;
