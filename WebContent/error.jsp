@@ -131,7 +131,7 @@ pageEncoding="ISO-8859-1"%>
           <h1>${statusCode}</h1>
           <h2>${error}</h2>
         </div>
-        <a href="home">Home Page</a>
+        <a href="${path}">Home Page</a>
       </div>
     </div>
   </body>

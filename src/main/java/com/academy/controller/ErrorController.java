@@ -78,6 +78,8 @@ public class ErrorController extends HttpServlet {
 
         String error = null;
 
+        String path = request.getContextPath();
+
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 
         switch (statusCode) {
@@ -100,6 +102,7 @@ public class ErrorController extends HttpServlet {
 
         request.setAttribute("statusCode", statusCode);
         request.setAttribute("error", error);
+        request.setAttribute("path", path);
 
         request.getRequestDispatcher("error.jsp").forward(request, response);
     }
