@@ -55,12 +55,14 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.12</version>
+            <scope>runtime</scope>
         </dependency>
 
 
     </dependencies>
 
     <build>
+        <finalName>learners-academy</finalName>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
